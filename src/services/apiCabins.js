@@ -10,7 +10,7 @@ export async function getCabins() {
 }
 
 export async function createEditCabin(newCabin, id) {
-  const hasImage = newCabin.image?.startsWith?.(supabaseUrl);
+  const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl);
   // 1. Create image url
 
   // make image name truely unique and remove all slashes (/)
@@ -19,7 +19,7 @@ export async function createEditCabin(newCabin, id) {
     ""
   );
   // https://ufarhfwnvrkiaxjhjrnl.supabase.co/storage/v1/object/public/cabin-images/cabin-001.jpg
-  const imagePath = hasImage
+  const imagePath = hasImagePath
     ? newCabin.image
     : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
 
@@ -37,6 +37,8 @@ export async function createEditCabin(newCabin, id) {
     throw new Error("Cabin could not be created :(");
   }
 
+  // if image already exists, do not upload anything
+  if (hasImagePath) return;
   // 3. If cabins is inserted successfully, upload the image
   const { error: storageError } = await supabase.storage
     .from("cabin-images")
