@@ -1,5 +1,43 @@
+import { PAGE_SIZE } from "../utils/constants";
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
+
+export async function getBookings({ filter, sortBy, page }) {
+  console.log(page);
+  // *, cabins(*), guests(*) will fetch all data from bookings. And single record of
+  // booking will also contain the associated record from cabins and guests table as its properties
+
+  let query = supabase.from("bookings").select(
+    "*, cabins(name), guests(fullName, email)",
+    // this gives us count
+    { count: "exact" }
+  );
+
+  // Filter
+  if (filter) query = query[filter.method || "eq"](filter.field, filter.value);
+
+  // Sort
+  if (sortBy)
+    query = query.order(sortBy.field, {
+      ascending: sortBy.direction === "asc",
+    });
+  // filter.method can be eq, gt, gte, ls, lse etc. we will get count cuz we already told it not to query whole data
+
+  // Pagination
+  if (page) {
+    const from = (page - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
+    query = query.range(from, to);
+  }
+
+  const { data, error, count } = await query;
+  if (error) {
+    console.error(error);
+    throw new Error("Bookings could not be loaded");
+  }
+
+  return { data, count };
+}
 
 export async function getBooking(id) {
   const { data, error } = await supabase
