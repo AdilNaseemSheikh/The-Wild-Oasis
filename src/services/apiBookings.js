@@ -3,7 +3,6 @@ import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 
 export async function getBookings({ filter, sortBy, page }) {
-  console.log(page);
   // *, cabins(*), guests(*) will fetch all data from bookings. And single record of
   // booking will also contain the associated record from cabins and guests table as its properties
 
