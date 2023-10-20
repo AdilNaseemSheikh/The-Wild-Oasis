@@ -10,8 +10,10 @@ export function useCheckout() {
       updateBooking(bookingId, { status: "checked-out" }),
     onSuccess: (data) => {
       toast.success(`Booking ${data.id} successfully checked out`);
+      // queryClient.setQueryData(['booking',data.id],data)
       // invalidate the query which is active
       queryClient.invalidateQueries({ queryKey: ["booking", data.id] });
+      // console.log('updating cache data. data => ',data);
     },
     onError: () => {
       toast.error("Error while checking out guest");
