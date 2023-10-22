@@ -98,21 +98,29 @@ function BookingRow({
         <Menus.Menu>
           <Menus.Toggle id={bookingId} />
           <Menus.List id={bookingId}>
-            <Menus.Button onClick={() => navigate(`/bookings/${bookingId}`)}>
-              <HiEye /> See details
+            <Menus.Button
+              onClick={() => navigate(`/bookings/${bookingId}`)}
+              icon={<HiEye />}
+            >
+              See details
             </Menus.Button>
             {status === "unconfirmed" && (
-              <Menus.Button onClick={() => navigate(`/bookings/${bookingId}`)}>
-                <HiArrowDownOnSquare /> Check in
+              <Menus.Button
+                onClick={() => navigate(`/bookings/${bookingId}`)}
+                icon={<HiArrowDownOnSquare />}
+              >
+                Check in
               </Menus.Button>
             )}
             {status === "checked-in" && (
               <Menus.Button
+                disabled={isCheckingOut}
+                icon={<HiArrowUpOnSquare />}
                 onClick={() => {
                   checkout(bookingId);
                 }}
               >
-                <HiArrowUpOnSquare /> Check out
+                Check out
               </Menus.Button>
             )}
             <Modal.Open opens="delete">
@@ -129,6 +137,7 @@ function BookingRow({
         </Menus.Menu>
         <Modal.Window name="delete">
           <ConfirmDelete
+            disabled={isDeleting}
             onConfirm={() => {
               deleteBooking(bookingId);
             }}
