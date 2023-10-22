@@ -1,9 +1,9 @@
-import { QueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateBooking } from "../../services/apiBookings";
 import toast from "react-hot-toast";
 
 export function useCheckout() {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   const { mutate: checkout, isLoading: isCheckingOut } = useMutation({
     queryKey: ["bookings"],
     mutationFn: (bookingId) =>
@@ -12,8 +12,7 @@ export function useCheckout() {
       toast.success(`Booking ${data.id} successfully checked out`);
       // queryClient.setQueryData(['booking',data.id],data)
       // invalidate the query which is active
-      queryClient.invalidateQueries({ queryKey: ["booking", data.id] });
-      // console.log('updating cache data. data => ',data);
+      queryClient.invalidateQueries({ active: true });
     },
     onError: () => {
       toast.error("Error while checking out guest");
