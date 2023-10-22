@@ -40,6 +40,8 @@ const GlobalStyles = createGlobalStyle`
   --shadow-lg: 0 2.4rem 3.2rem rgba(0, 0, 0, 0.12);
   --image-grayscale: 0;
   --image-opacity: 100%;
+
+  --color-notification:#c7d2fe;
 }
 
 
@@ -79,6 +81,8 @@ const GlobalStyles = createGlobalStyle`
 
   --image-grayscale: 10%;
   --image-opacity: 90%;
+
+  --color-notification:#4f46e5;
     }
 
     /* Indigo */

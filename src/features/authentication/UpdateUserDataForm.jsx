@@ -8,6 +8,7 @@ import Input from "../../ui/Input";
 
 import { useUser } from "./useUser";
 import { useUpdateUser } from "./useUpdateUser";
+import toast from "react-hot-toast";
 
 function UpdateUserDataForm() {
   // We don't need the loading state, and can immediately use the user data, because we know that it has already been loaded at this point
@@ -25,20 +26,21 @@ function UpdateUserDataForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    updateUser(
-      { fullName, password: null, avatar },
-      {
-        onSuccess: () => {
-          setAvatar(null);
-          // reset on form
-          e.target.reset();
-        },
-      }
-    );
+    toast.error("this feature is disabled");
+    // updateUser(
+    //   { fullName, password: null, avatar },
+    //   {
+    //     onSuccess: () => {
+    //       setAvatar(null);
+    //       // reset on form
+    //       e.target.reset();
+    //     },
+    //   }
+    // );
   }
 
   function handleCancel() {
-    setFullName(currentFullName)
+    setFullName(currentFullName);
   }
 
   return (

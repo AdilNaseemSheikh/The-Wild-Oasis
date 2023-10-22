@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import styled from "styled-components";
+import TopBar from "./TopBar";
 
 const Main = styled.main`
   background-color: var(--color-grey-50);
@@ -13,7 +14,7 @@ const Main = styled.main`
 const StyledApp = styled.div`
   display: grid;
   grid-template-columns: 26rem 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   height: 100vh;
 `;
 
@@ -28,6 +29,7 @@ const Container = styled.div`
 function AppLayout() {
   return (
     <StyledApp>
+      <TopBar/>
       <Header />
       <Sidebar />
       <Main>
